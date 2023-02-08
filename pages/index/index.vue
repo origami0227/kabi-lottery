@@ -5,8 +5,8 @@
 			<text>{{num}}</text>
 		</view>
 		<view class="button-area">
-			<button v-show="isOver">开始抽奖</button>
-			<button v-show="!isOver">结束抽奖</button>
+			<button v-show="isOver" @click="start">开始抽奖</button>
+			<button v-show="!isOver" @click="stop">结束抽奖</button>
 		</view>
 	</view>
 </template>
@@ -17,14 +17,30 @@
 			return {
 				title: '卡比抽奖',
 				num: 40,
+				min: 0, //包含
+				max: 100, //不包含
+				interval: 100, //ms 时间间隔
 				isOver: true,
+				clock: null,
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
-
+			start() {
+				this.isOver = false
+				this.clock = setInterval(() => {
+					this.num = this.getRandomNum()
+				}, this.interval)
+			},
+			getRandomNum() {
+				return this.min + Math.floor(Math.random() * (this.max - this.min)) //获取随机数,并且向下取整
+			},
+			stop(){
+				clearInterval(this.clock)
+				this.isOver = true
+			}
 		}
 	}
 </script>
@@ -43,10 +59,11 @@
 
 		text {
 			font-size: 180rpx;
-			
+
 		}
 	}
-	.button-area{
+
+	.button-area {
 		margin-top: 120rpx;
 	}
 
