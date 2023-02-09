@@ -24,8 +24,18 @@
 				clock: null,
 			}
 		},
-		onLoad() {
 
+		onShow() { //只要切换页面就触发
+			//先看有没有存储的setting 有就提取
+			let setting = uni.getStorageSync('setting') || {
+				max: 100,
+				min: 0,
+				interval: 100
+			}
+			//初始化
+			this.max = setting.max
+			this.min = setting.min
+			this.interval = setting.interval
 		},
 		methods: {
 			start() {
@@ -35,9 +45,9 @@
 				}, this.interval)
 			},
 			getRandomNum() {
-				return this.min + Math.floor(Math.random() * (this.max - this.min)) //获取随机数,并且向下取整
+				return parseInt(this.min) + Math.floor(Math.random() * (parseInt(this.max) - parseInt(this.min))) //获取随机数,并且向下取整
 			},
-			stop(){
+			stop() {
 				clearInterval(this.clock)
 				this.isOver = true
 			}
