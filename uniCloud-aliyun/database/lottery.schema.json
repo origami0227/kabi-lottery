@@ -6,7 +6,7 @@
 		"update": true,
 		"delete": true
 	},
-	"required": ["title"],
+	"required": ["title","photo"],
 	"properties": {
 		"_id": {
 			"description": "存储文档 ID（用户 ID），系统自动生成"
@@ -15,6 +15,12 @@
 			"bsonType": "string",
 			"title": "名称",
 			"description": "输入奖品名称"
+		},
+		"photo":{
+			"bsonType": "file",
+			"title": "图片",
+			"fileMediaType": "image",
+			"fileExtName": "jpg,png"
 		}
 	},
 	"version": "0.0.1"

@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="options" :collection="collectionList" field="title" :where="queryWhere" :getone="true" :manual="true">
+    <unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="options" :collection="collectionList" field="title,photo" :where="queryWhere" :getone="true" :manual="true">
       <view v-if="error">{{error.message}}</view>
       <view v-else-if="loading">
         <uni-load-more :contentText="loadMore" status="loading"></uni-load-more>
@@ -9,6 +9,12 @@
         <view>
           <text>名称</text>
           <text>{{data.title}}</text>
+        </view>
+        <view>
+          <text>图片</text>
+          <uni-file-picker v-if="data.photo && data.photo.fileType == 'image'" :value="data.photo" :file-mediatype="data.photo && data.photo.fileType" return-type="object" readonly></uni-file-picker>
+          <uni-link v-else-if="data.photo" :href="data.photo.url" :text="data.photo.url"></uni-link>
+          <text v-else></text>
         </view>
       </view>
     </unicloud-db>
